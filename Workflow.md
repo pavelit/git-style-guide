@@ -1,57 +1,58 @@
-# Git Style Guide
+# Цикл разработки через Github
 
-This is a Git Style Guide inspired by [*How to Get Your Change Into the Linux
-Kernel*](https://kernel.org/doc/html/latest/process/submitting-patches.html),
-the [git man pages](http://git-scm.com/doc) and various practices popular
-among the community.
+Источник [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/)
 
-Translations are available in the following languages:
+# Содержание
 
-* [Chinese (Simplified)](https://github.com/aseaday/git-style-guide)
-* [Chinese (Traditional)](https://github.com/JuanitoFatas/git-style-guide)
-* [French](https://github.com/pierreroth64/git-style-guide)
-* [German](https://github.com/runjak/git-style-guide)
-* [Greek](https://github.com/grigoria/git-style-guide)
-* [Japanese](https://github.com/objectx/git-style-guide)
-* [Korean](https://github.com/ikaruce/git-style-guide)
-* [Portuguese](https://github.com/guylhermetabosa/git-style-guide)
-* [Spanish](https://github.com/alexsimo/git-style-guide)
-* [Thai](https://github.com/zondezatera/git-style-guide)
-* [Turkish](https://github.com/CnytSntrk/git-style-guide)
-* [Ukrainian](https://github.com/denysdovhan/git-style-guide)
-
-If you feel like contributing, please do so! Fork the project and open a pull
-request.
-
-# Table of contents
-
-1. [Branches](#branches)
-2. [Commits](#commits)
-  1. [Messages](#messages)
-3. [Merging](#merging)
+1. Ветвления ([Branches](#branches))
+2. Фиксация изменений к коде или проще говоря "коммиты" ([Commits](#commits))
+  1. Комментарии к коммитах [Messages](#messages)
+3. Слияние веток [Merging](#merging)
 4. [Misc.](#misc)
 
-## Branches
+## Ветвления
 
-* Choose *short* and *descriptive* names:
+### Главные ветви
+
+**master**
+Здесь находится стабильный рабочий код, который готов к развертыванию на production-сервере. В данной ветке работа не ведется, и она только сливается с Release и Hotfix ветками. Master создается автоматически при создании репозитория.
+
+**develop**
+
+Здесь находится весь код, который готовится к следующему релизу. Весь функционал, который касается следующих релизов, здесь находиться не должен.
+
+### Вспомогательные ветви
+
+**feature**
+
+Так называются функциональные ветки, где находится функционал, например, позадачно. Каждая функциональная ветка создается отдельно, и после выполнения задания объединяется только с веткой develop.
+
+**issue**
+
+Так называются баг ветки, где решается проблема конкретного issue. Каждая баг ветка создается отдельно, и после фиксации бага/проблемы объединяется только с веткой develop.
+
+**release**
+
+После того, как готовый или почти готовый функционал помещен в ветку develop, можно начинать готовить релиз. Это последняя ветка перед переносом в master. Здесь могут быть сделаны какие-то минимальные изменения в функционале или выполнены фиксы багов. Добавлять в эту ветку новый большой функционал запрещено, а все комиты нужно переносить в ветку develop. После создания ветки релиза версии v.1.0, в ветку develop уже можно заливать изменения, которые будут касаться следующего релиза (версия v.2.0, например).
+
+* Выбирайте *короткие* и *емкие* наименования веток:
 
   ```shell
-  # good
+  # хорошо
   $ git checkout -b oauth-migration
 
-  # bad - too vague
+  # плохо - расплывчато
   $ git checkout -b login_fix
   ```
 
-* Identifiers from corresponding tickets in an external service (eg. a GitHub
-  issue) are also good candidates for use in branch names. For example:
+* Идентификаторы/номера issue - хороший пример для наименования ветки. Например:
 
   ```shell
-  # GitHub issue #15
-  $ git checkout -b issue-15
+  # GitHub issue #221
+  $ git checkout -b issue-221
   ```
 
-* Use *dashes* to separate words.
+* Используйте *тире* для нескольких слов, вместо *точек*.
 
 * When several people are working on the *same* feature, it might be convenient
   to have *personal* feature branches and a *team-wide* feature branch.
@@ -250,19 +251,3 @@ holds true that you should apply all of the above *before* pushing it.
 
 * Keep your repositories at a good shape by performing maintenance tasks
   occasionally:
-
-  * [`git-gc(1)`](http://git-scm.com/docs/git-gc)
-  * [`git-prune(1)`](http://git-scm.com/docs/git-prune)
-  * [`git-fsck(1)`](http://git-scm.com/docs/git-fsck)
-
-# License
-
-![cc license](http://i.creativecommons.org/l/by/4.0/88x31.png)
-
-This work is licensed under a [Creative Commons Attribution 4.0
-International license](https://creativecommons.org/licenses/by/4.0/).
-
-# Credits
-
-Agis Anastasopoulos / [@agisanast](https://twitter.com/agisanast) / http://agis.io
-... and [contributors](https://github.com/agis-/git-style-guide/graphs/contributors)!
